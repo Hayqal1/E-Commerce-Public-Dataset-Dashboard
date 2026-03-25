@@ -16,7 +16,10 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")
+    import os
+
+    file_path = os.path.join(os.path.dirname(__file__), "main_data.csv")
+    df = pd.read_csv(file_path)
 
     datetime_cols = [
         'order_purchase_timestamp',
@@ -25,12 +28,11 @@ def load_data():
         'order_delivered_customer_date',
         'order_estimated_delivery_date'
     ]
-    for col in datetime_cols:
-        if col in df.columns:
-            df[col] = pd.to_datetime(df[col])
 
-    df['year_month'] = df['order_purchase_timestamp'].dt.to_period('M')
-    df['year_month_str'] = df['year_month'].astype(str)
+    for col in datetime_cols:
+        df[col] = pd.to_datetime(df[col])
+
+    df['year_month_str'] = df['order_purchase_timestamp'].dt.strftime('%Y-%m')
 
     return df
 
