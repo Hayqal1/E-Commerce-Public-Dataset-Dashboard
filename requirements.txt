@@ -1,7 +1,7 @@
+streamlit
 pandas
 numpy
 matplotlib
 seaborn
-streamlit
 plotly
-babel
+altair==4.2.2
