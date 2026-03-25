@@ -1,1 +1,1 @@
-http://localhost:8502/
+https://e-commerce-public-dataset-dashboard-mpd6p6ep9wwbbbbmcx4zt6.streamlit.app/
