@@ -133,20 +133,19 @@ top_revenue = category_sales.sort_values('total_revenue', ascending=False).head(
 
 fig, axes = plt.subplots(1, 2, figsize=(18, 7))
 
-bars1 = axes[0].barh(
-    top_sold['product_category_name_english'], top_sold['total_sold'],
-    color=sns.color_palette('Blues_r', top_n)
-)
+base_color      = '#A5D6A7'
+highlight_color = '#2E7D32'
+
+colors_sold = [highlight_color if i == len(top_sold) - 1 else base_color for i in range(len(top_sold))]
+bars1 = axes[0].barh(top_sold['product_category_name_english'], top_sold['total_sold'], color=colors_sold)
 axes[0].set_title(f'Top {top_n} Kategori Produk Terlaris', fontsize=13, fontweight='bold')
 axes[0].set_xlabel('Jumlah Terjual')
 for bar in bars1:
     axes[0].text(bar.get_width() + 30, bar.get_y() + bar.get_height()/2,
                  f'{int(bar.get_width()):,}', va='center', fontsize=9)
 
-bars2 = axes[1].barh(
-    top_revenue['product_category_name_english'], top_revenue['total_revenue'],
-    color=sns.color_palette('Greens_r', top_n)
-)
+colors_rev = [highlight_color if i == len(top_revenue) - 1 else base_color for i in range(len(top_revenue))]
+bars2 = axes[1].barh(top_revenue['product_category_name_english'], top_revenue['total_revenue'], color=colors_rev)
 axes[1].set_title(f'Top {top_n} Kategori Revenue Tertinggi', fontsize=13, fontweight='bold')
 axes[1].set_xlabel('Total Revenue (BRL)')
 axes[1].xaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f'R${v/1e6:.1f}M'))
@@ -170,12 +169,14 @@ customer_state = (
 )
 
 fig, ax = plt.subplots(figsize=(14, 6))
-palette = sns.color_palette('viridis', len(customer_state))
-bars = ax.bar(customer_state['customer_state'], customer_state['total_customers'], color=palette)
+
+base_color      = '#90CAF9'
+highlight_color = '#1565C0'
+
+colors = [highlight_color if i == 0 else base_color for i in range(len(customer_state))]
+bars = ax.bar(customer_state['customer_state'], customer_state['total_customers'], color=colors)
 
 for i, bar in enumerate(bars[:3]):
-    bar.set_edgecolor('black')
-    bar.set_linewidth(1.5)
     ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 100,
             f'{int(bar.get_height()):,}', ha='center', fontsize=8, fontweight='bold')
 
